@@ -46,3 +46,5 @@ So, a complete input file with a rest could look like:
 h.a4 c4
 h.r
 ie-4 g#4
+
+Made by Drew Warner
