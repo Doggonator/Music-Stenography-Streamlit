@@ -1,0 +1,48 @@
+This program is intended to streamline and accelerate the process of writing down song ideas for musicians and composers who just want to use their computer keyboard
+Each note is composed of:
+-Each tone
+-The length of the note
+
+Notes can be anything from whole-32nd. Assumes whole note is 4 beats, etc
+whole = w
+half = h
+quarter = q
+eight = i
+sixteenth = s
+thirty-second = t
+If the note is dotted, add a period (.)
+So, a dotted quarter note would start with "q."
+
+Tones are also simple
+Tones are composed with their name (a-g) and their octave (number) (i.e. a4).
+If the note is sharp, add a #
+If the note is flat, add a -
+
+(Also note that as long as notes are split by whitespace (space (if chord) or linebreak (enter/return[when defining a new note])), they do not need to be in any specific order)
+
+So, a complete note looks as followed (This is a dotted half with a c4 and an a4)
+(Note that tones need a space in between them)
+h.a4 c4
+
+Notes are seperated by linebreaks
+h.a4 c4
+ie4 g4
+
+
+An input must also contain tempo on the first line (bpm of quarter note)
+
+So, a complete input file could look like:
+120 
+h.a4 c4
+ie4 g4
+
+
+If you wish to add rests, treat the rest like a tone in a note, but make sure not to add any other tones to that note
+Half note rest i.e.:
+hr
+
+So, a complete input file with a rest could look like:
+120 
+h.a4 c4
+h.r
+ie-4 g#4
