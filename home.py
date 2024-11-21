@@ -13,6 +13,8 @@ if "in_text" not in st.session_state:
     st.session_state.in_text = ""
 if "first_time" not in st.session_state:#make sure not to process nothing
     st.session_state.first_time = True
+if "uploader" not in st.session_state:
+    st.session_state.uploader = None
 outFile = None
 #quickly write an empty outFile
 mf = MIDIFile(1)     # 1 track
@@ -22,6 +24,9 @@ mf.addTempo(0, 0, 120)#add tempo at track 0 time 0. Tempo variable was created e
 with open("output.mid", 'wb') as outf:
     mf.writeFile(outf)
 outFile = open("output.mid", 'rb')
+with open("musicStenographySave.mssf", 'w+') as file:
+    file.write("")
+stenoSave = open("musicStenographySave.mssf", 'r')
 def parse_note(instringunfiltered):#turns one note into a parsed note. The returned note is: [notelength in beats, midinotevalue, midinotevalue] (midinotevalue being the midi id number for that note)
     instring = instringunfiltered.lower()#make sure no capitals mess it up.
     notelength = 0
@@ -122,14 +127,24 @@ def on_userinput_update():#if we need to change the display data because the inp
             with open("output.mid", 'wb') as outf:
                 mf.writeFile(outf)
             outFile = open("output.mid", 'rb')
+            #write the shorthand file version to the disk
+            with open("musicStenographySave.mssf", 'w+') as file:
+                file.write(st.session_state.in_text)
+            stenoSave = open('musicStenographySave.mssf', 'r')
         except:
             st.session_state.out_text = "Tempo input error"
     else:
         st.session_state.first_time = False
-
+from io import StringIO
+def processShorthand():#upload a previous music shorthand save file (mssf)
+    if st.session_state.upload_file != None:
+        strung = StringIO(st.session_state.upload_file.getvalue().decode("utf-8")).read()
+        st.session_state.in_text = strung
+        st.session_state.first_time = False
 #other global variables
 steno_input = st.text_area("Input musical shorthand below: (Ctrl+Enter or click off of input to process)", on_change = on_userinput_update(), key = "in_text")
 steno_data_display = st.text(st.session_state.out_text)
 fully_processed_data = []#the note data outputted by the composer stenography program itself
 download = st.download_button("Click to download MIDI", data=outFile, file_name = "output.mid")
-#todo: add instructions tab or something and maybe some kind of visualization of the song as it is being written
+downloadShorthand = st.download_button("Click to download musical shorthand file (to save this work for later)", data=stenoSave, file_name = "musicStenographySave.mssf")
+uploadShorthand = st.file_uploader("Click to upload a previous musical shorthand file", on_change = processShorthand, key = "upload_file")
