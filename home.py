@@ -142,9 +142,9 @@ def processShorthand():#upload a previous music shorthand save file (mssf)
         st.session_state.in_text = strung
         st.session_state.first_time = False
 #other global variables
-steno_input = st.text_area("Input musical shorthand below: (Ctrl+Enter or click off of input to process)", on_change = on_userinput_update(), key = "in_text")
+steno_input = st.text_area("Input musical shorthand below: (Click off of input to process)", on_change = on_userinput_update(), key = "in_text")
 steno_data_display = st.text(st.session_state.out_text)
 fully_processed_data = []#the note data outputted by the composer stenography program itself
 download = st.download_button("Click to download MIDI", data=outFile, file_name = "output.mid")
 downloadShorthand = st.download_button("Click to download musical shorthand file (to save this work for later)", data=stenoSave, file_name = "musicStenographySave.mssf")
-uploadShorthand = st.file_uploader("Click to upload a previous musical shorthand file", on_change = processShorthand, key = "upload_file")
+uploadShorthand = st.file_uploader("Click to upload a previous musical shorthand file (.mssf)", on_change = processShorthand, key = "upload_file", type = ['mssf'])
