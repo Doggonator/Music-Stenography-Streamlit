@@ -31,6 +31,8 @@ stenoSave = open("musicStenographySave.mssf", 'r')
 #make the base wav file to make sure no errors occur trying to read it before created
 fs = FluidSynth()#here, soundfonts can be specified.
 fs.midi_to_audio('output.mid', 'output.wav')#should, at this point, be empty.
+previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")#this is up here because it is more convenient to click
+audioplaycaption = st.caption("Click to play a preview of your shorthand") 
 def parse_note(instringunfiltered):#turns one note into a parsed note. The returned note is: [notelength in beats, midinotevalue, midinotevalue] (midinotevalue being the midi id number for that note)
     instring = instringunfiltered.lower()#make sure no capitals mess it up.
     notelength = 0
@@ -154,4 +156,3 @@ fully_processed_data = []#the note data outputted by the composer stenography pr
 download = st.download_button("Click to download MIDI", data=outFile, file_name = "output.mid")
 downloadShorthand = st.download_button("Click to download musical shorthand file (to save this work for later)", data=stenoSave, file_name = "musicStenographySave.mssf")
 uploadShorthand = st.file_uploader("Click to upload a previous musical shorthand file (.mssf)", on_change = processShorthand, key = "upload_file", type = ['mssf'])
-previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")
