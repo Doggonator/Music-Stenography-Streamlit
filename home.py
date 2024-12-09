@@ -31,8 +31,6 @@ stenoSave = open("musicStenographySave.mssf", 'r')
 #make the base wav file to make sure no errors occur trying to read it before created
 fs = FluidSynth()#here, soundfonts can be specified.
 fs.midi_to_audio('output.mid', 'output.wav')#should, at this point, be empty.
-previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")#this is up here because it is more convenient to click
-audioplaycaption = st.caption("Click to play a preview of your shorthand") 
 def parse_note(instringunfiltered):#turns one note into a parsed note. The returned note is: [notelength in beats, midinotevalue, midinotevalue] (midinotevalue being the midi id number for that note)
     instring = instringunfiltered.lower()#make sure no capitals mess it up.
     notelength = 0
@@ -150,6 +148,7 @@ def processShorthand():#upload a previous music shorthand save file (mssf)
         st.session_state.in_text = strung
         st.session_state.first_time = False
 #other global variables
+previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")#this is up here because it is more convenient to click
 steno_input = st.text_area("Input musical shorthand below: (Click off of input to process)", on_change = on_userinput_update(), key = "in_text")
 steno_data_display = st.text(st.session_state.out_text)
 fully_processed_data = []#the note data outputted by the composer stenography program itself
