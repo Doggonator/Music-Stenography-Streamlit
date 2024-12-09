@@ -148,9 +148,9 @@ def processShorthand():#upload a previous music shorthand save file (mssf)
         st.session_state.in_text = strung
         st.session_state.first_time = False
 #other global variables
-previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")#this is up here because it is more convenient to click
 steno_input = st.text_area("Input musical shorthand below: (Click off of input to process)", on_change = on_userinput_update(), key = "in_text")
 steno_data_display = st.text(st.session_state.out_text)
+previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")#this is up here because it is more convenient to click
 fully_processed_data = []#the note data outputted by the composer stenography program itself
 download = st.download_button("Click to download MIDI", data=outFile, file_name = "output.mid")
 downloadShorthand = st.download_button("Click to download musical shorthand file (to save this work for later)", data=stenoSave, file_name = "musicStenographySave.mssf")
