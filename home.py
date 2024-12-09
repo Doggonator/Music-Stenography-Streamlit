@@ -136,9 +136,7 @@ def on_userinput_update():#if we need to change the display data because the inp
                 file.write(st.session_state.in_text)
             stenoSave = open('musicStenographySave.mssf', 'r')
             #make the wav file for playback
-            st.spinner("Converting MIDI for playback in browser...")
             fs.midi_to_audio('output.mid', 'output.wav')
-            st.success("Converted successfully")
         except:
             st.session_state.out_text = "Tempo input error"
     else:
