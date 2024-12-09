@@ -2,6 +2,7 @@ import streamlit as st
 import librosa
 #midi export is from https://stackoverflow.com/questions/11059801/how-can-i-write-a-midi-file-with-python 9/28/2024
 from midiutil.MidiFile import MIDIFile
+from midi2audio import FluidSynth
 #NOTE: Use streamlit run -filename- to execute the program
 #when testing, Ctrl+C the terminal before exiting the tab or else the terminal freezes.
 st.title("Music Stenography")
@@ -27,6 +28,9 @@ outFile = open("output.mid", 'rb')
 with open("musicStenographySave.mssf", 'w+') as file:
     file.write("")
 stenoSave = open("musicStenographySave.mssf", 'r')
+#make the base wav file to make sure no errors occur trying to read it before created
+fs = FluidSynth()#here, soundfonts can be specified.
+fs.midi_to_audio('output.mid', 'output.wav')#should, at this point, be empty.
 def parse_note(instringunfiltered):#turns one note into a parsed note. The returned note is: [notelength in beats, midinotevalue, midinotevalue] (midinotevalue being the midi id number for that note)
     instring = instringunfiltered.lower()#make sure no capitals mess it up.
     notelength = 0
@@ -131,6 +135,10 @@ def on_userinput_update():#if we need to change the display data because the inp
             with open("musicStenographySave.mssf", 'w+') as file:
                 file.write(st.session_state.in_text)
             stenoSave = open('musicStenographySave.mssf', 'r')
+            #make the wav file for playback
+            st.spinner("Converting MIDI for playback in browser...")
+            fs.midi_to_audio('output.mid', 'output.wav')
+            st.success("Converted successfully")
         except:
             st.session_state.out_text = "Tempo input error"
     else:
@@ -148,3 +156,4 @@ fully_processed_data = []#the note data outputted by the composer stenography pr
 download = st.download_button("Click to download MIDI", data=outFile, file_name = "output.mid")
 downloadShorthand = st.download_button("Click to download musical shorthand file (to save this work for later)", data=stenoSave, file_name = "musicStenographySave.mssf")
 uploadShorthand = st.file_uploader("Click to upload a previous musical shorthand file (.mssf)", on_change = processShorthand, key = "upload_file", type = ['mssf'])
+previewPlayer = st.audio(open('output.wav', 'rb').read(), "audio/wav")
