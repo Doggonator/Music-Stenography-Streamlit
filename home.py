@@ -94,10 +94,11 @@ def process_repeats(instring):
                         break
                     if split[cur] == "\n":
                         break
-                    if split[cur].isdigit() and split[cur] != " ":
+                    if split[cur].isdigit():
                         digits += split[cur]
                         has_num = True
                     cur += 1
+                digits = digits.replace(" ", "")#remove any accidental spaces
                 number_repeats = 2#default is play it two times
                 if has_num:
                     number_repeats = int(digits)
