@@ -112,6 +112,7 @@ def process_repeats(instring):
             else:
                 repeat_string += character
         index += 1
+    return final
 def process_steno(text_in):
     outputtednotes = []
     text = process_repeats(text_in)
