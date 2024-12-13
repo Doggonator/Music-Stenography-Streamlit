@@ -94,7 +94,7 @@ def process_repeats(instring):
                         break
                     if split[cur] == "\n":
                         break
-                    if split[cur].isdigit():
+                    if split[cur].isdigit() and split[cur] != " ":
                         digits += split[cur]
                         has_num = True
                     cur += 1
