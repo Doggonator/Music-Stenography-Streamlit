@@ -107,8 +107,9 @@ def process_repeats(instring):
                         repeat_string = repeat_string[:len(repeat_string)-1]
                     final += repeat_string
                 repeat_string = ""
-                for i in range(len(digits)+1):#remove the digits that show how many repeats
-                    split.pop(index)
+                if len(digits) != 0:
+                    for i in range(len(digits)+1):#remove the digits that show how many repeats
+                        split.pop(index)
             else:
                 repeat_string += character
         index += 1
