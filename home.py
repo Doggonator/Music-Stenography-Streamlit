@@ -98,7 +98,6 @@ def process_repeats(instring):
                         digits += split[cur]
                         has_num = True
                     cur += 1
-                digits = digits.replace(" ", "")#remove any accidental spaces
                 number_repeats = 2#default is play it two times
                 if has_num:
                     number_repeats = int(digits)
@@ -108,7 +107,7 @@ def process_repeats(instring):
                         repeat_string = repeat_string[:len(repeat_string)-1]
                     final += repeat_string
                 repeat_string = ""
-                for i in range(len(digits)):#remove the digits that show how many repeats
+                for i in range(len(digits)+1):#remove the digits that show how many repeats
                     split.pop(index)
             else:
                 repeat_string += character
@@ -186,7 +185,7 @@ def on_userinput_update():#if we need to change the display data because the inp
             stenoSave = open('musicStenographySave.mssf', 'r')
             #make the wav file for playback
             fs.midi_to_audio('output.mid', 'output.wav')
-        except:
+        except Exception as e:
             st.session_state.out_text = "Tempo input error"
     else:
         st.session_state.first_time = False
