@@ -67,8 +67,53 @@ def parse_note(instringunfiltered):#turns one note into a parsed note. The retur
         midinotes.append(librosa.note_to_midi(noteprocessed))
     midinotes.insert(0, notelength)#put the notelength in the front of the list
     return midinotes
-def process_steno(text):
+def process_repeats(instring):
+    #The repeats are how many times it is played, not how many times it is repeated.
+    #repeats cannot be called back to the start without a repeat start symbol there (<)
+    #repeats without numbers assume to play the section twice
+    split = list(instring)
+    final = ""#the string that will be returned
+    repeat_string = ""#what is to be repeated
+    index = 0#for finding repeat numbers
+    for character in split:
+        if len(repeat_string) == 0:
+            if character == "<":
+                repeat_string += "<"
+            else:
+                final += character
+        else:
+            repeat_string = repeat_string.replace("<\n", "")#make sure we get rid of that identifying first character (it is there just to let the program know that a repeat has been started)
+            if character == ">":
+                #check to see if we find numbers before the next linebreak
+                cur = index
+                has_num = False
+                digits = ""#we could have multiple-digit numbers
+                while True:
+                    if cur >= len(split):
+                        break
+                    if split[cur] == "\n":
+                        break
+                    if split[cur].isdigit():
+                        digits += split[cur]
+                        has_num = True
+                    cur += 1
+                number_repeats = 2#default is play it two times
+                if has_num:
+                    number_repeats = int(digits)
+                for i in range(number_repeats):
+                    if i == number_repeats -1:
+                        #the following line removes a linebreak that should not be there. This is because we're not counting the ">", and the previous line had a linebreak.
+                        repeat_string = repeat_string[:len(repeat_string)-1]
+                    final += repeat_string
+                repeat_string = ""
+                for i in range(len(digits)):#remove the digits that show how many repeats
+                    split.pop(index)
+            else:
+                repeat_string += character
+        index += 1
+def process_steno(text_in):
     outputtednotes = []
+    text = process_repeats(text_in)
     splitinput = text.splitlines()
     errors = ""#to show the user any errors that could arise
     try:
@@ -109,9 +154,10 @@ def on_userinput_update():#if we need to change the display data because the inp
             if len(fully_processed_data[2]) == 0:
                 readable += "None"
             else:
-                for item in fully_processed_data[2]:
-                    readable += item
-                    readable += ", "
+                #for item in fully_processed_data[2]:
+                #    readable += item
+                #    readable += ", "
+                readable += "".join(fully_processed_data[2])#this removes the comma separation problem.
             st.session_state.out_text = readable
             #now write the midi
             tempo = fully_processed_data[0]

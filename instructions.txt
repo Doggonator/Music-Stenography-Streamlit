@@ -47,4 +47,32 @@ h.a4 c4
 h.r
 ie-4 g#4
 
+Repeats are also implemented!
+For example
+<
+he5 c5
+> 
+will output he5 c5 twice (1 repeat is default)
+<
+he5 c5
+>2
+will also output he5 c5 twice (if a number is specified, the segment in the repeat will be played that number of times)
+
+If you put a closing repeat before an opening repeat, the repeat is ignored.
+i.e.
+120
+he5
+>
+
+Also make sure to not include tempo in the repeat (make sure if repeating to the start that the tempo is not included). As well as this, do not put repeats within each other.
+
+Repeats within each other (don't do):
+120
+<
+he5
+<
+c5
+>
+>
+
 Made by Drew Warner

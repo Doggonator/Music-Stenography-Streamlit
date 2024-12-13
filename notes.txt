@@ -1,0 +1,1 @@
+This can't be run without the installation of FluidSynth or running in the streamlit release (streamlit auto-installs it on the app because it is specified in the packages.txt file)
