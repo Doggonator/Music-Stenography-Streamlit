@@ -63,8 +63,9 @@ def parse_note(instringunfiltered):#turns one note into a parsed note. The retur
     #process each midi note
     midinotes = []
     for item in eachnote:
-        noteprocessed = item.replace('-', '♭')
-        midinotes.append(librosa.note_to_midi(noteprocessed))
+        if item != "":#ignore empty notes
+            noteprocessed = item.replace('-', '♭')
+            midinotes.append(librosa.note_to_midi(noteprocessed))
     midinotes.insert(0, notelength)#put the notelength in the front of the list
     return midinotes
 def process_repeats(instring):
