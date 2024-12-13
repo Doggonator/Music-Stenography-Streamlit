@@ -53,7 +53,7 @@ For example
 he5 c5
 > 
 
--Please ensure that repeats are on their own lines, as shown above or below
+--Please ensure that repeats are on their own lines, as shown above or below--
 
 will output he5 c5 twice (1 repeat is default)
 <
