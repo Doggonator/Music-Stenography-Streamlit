@@ -80,4 +80,6 @@ c5
 
 Note that if an error occurs within a repeat, the error traceback may not be accurate in terms of line number
 
+Also ensure that no characters occur on the same line as an opening repeat.
+
 Made by Drew Warner

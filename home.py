@@ -187,7 +187,7 @@ def on_userinput_update():#if we need to change the display data because the inp
             #make the wav file for playback
             fs.midi_to_audio('output.mid', 'output.wav')
         except Exception as e:
-            st.session_state.out_text = "Tempo input error"
+            st.session_state.out_text = "Unknown error. Please ensure that a tempo is present at the start of the input."
     else:
         st.session_state.first_time = False
 from io import StringIO
