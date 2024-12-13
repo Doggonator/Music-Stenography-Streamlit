@@ -80,6 +80,13 @@ def process_repeats(instring):
         if len(repeat_string) == 0:
             if character == "<":
                 repeat_string += "<"
+                #remove any subsequent spaces or characters
+                cur = index
+                while True:
+                    if split[cur] == "\n":
+                        break
+                    split.pop(cur)
+                    cur += 1
             else:
                 final += character
         else:
