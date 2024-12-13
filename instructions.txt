@@ -75,4 +75,6 @@ c5
 >
 >
 
+Note that if an error occurs within a repeat, the error traceback may not be accurate in terms of line number
+
 Made by Drew Warner
